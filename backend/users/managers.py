@@ -3,7 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class CustomUserManager(BaseUserManager):
     """
-    Менеджер кастомной модели пользователя с email в качсетве уникального
+    Менеджер кастомной модели пользователя с email в качестве уникального
     идентификатора для авторизации.
     """
     def create_user(self, email, password, **extra_fields):

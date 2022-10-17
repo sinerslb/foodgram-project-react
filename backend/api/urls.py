@@ -1,23 +1,18 @@
 from django.urls import include, path
-from django.conf.urls import url
 from rest_framework import routers
-
-# from api.views import PostViewSet
+from api.views import (CustomUserViewSet, IngredientsViewSet, RecipesViewSet,
+                       TagsViewSet)
 
 app_name = 'api'
 
 router = routers.DefaultRouter()
-# router.register(r'posts', PostViewSet)
-# router.register(r'groups', GroupViewSet)
-# router.register(
-#     r'posts/(?P<post_id>\d+)/comments',
-#     CommentsViewSet,
-#     basename='comments'
-# )
-# router.register(r'follow', FollowViewSet, basename='follow')
+
+router.register(r'tags', TagsViewSet, basename='tags')
+router.register(r'recipes', RecipesViewSet, basename='recipes')
+router.register(r'users', CustomUserViewSet, 'users')
+router.register(r'ingredients', IngredientsViewSet)
 
 urlpatterns = [
-    url(r'^auth/', include('djoser.urls.authtoken')),
-    path('', include('djoser.urls')),
-    # path('', include(router.urls)),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('', include(router.urls)),
 ]
