@@ -263,7 +263,6 @@ class RecipesSerializer(serializers.ModelSerializer):
             'cooking_time', recipe.cooking_time)
 
         if tags:
-            recipe.tags.clear()
             recipe.tags.set(tags)
 
         if ingredients:
