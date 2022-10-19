@@ -13,7 +13,6 @@ class Tag(models.Model):
         verbose_name='Название тега',
         max_length=100,
         unique=True,
-        blank=False,
     )
 
     color = models.CharField(
@@ -27,7 +26,6 @@ class Tag(models.Model):
     slug = models.SlugField(
         unique=True,
         verbose_name='slug тега',
-        blank=False,
     )
 
     class Meta:
@@ -45,13 +43,12 @@ class Ingredient(models.Model):
     name = models.CharField(
         verbose_name='Название ингредиента',
         max_length=100,
-        blank=False,
+        db_index=True,
     )
 
     measurement_unit = models.CharField(
         verbose_name='Еденица измерения',
         max_length=10,
-        blank=False,
     )
 
     class Meta:
@@ -76,6 +73,7 @@ class Recipe(models.Model):
     name = models.CharField(
         verbose_name='Название рецепта',
         max_length=100,
+        db_index=True,
     )
 
     image = models.ImageField(
@@ -95,7 +93,6 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         through='IngredientsInRecipe',
-        blank=False,
     )
 
     cooking_time = models.PositiveSmallIntegerField(
@@ -103,7 +100,6 @@ class Recipe(models.Model):
         validators=[
             MinValueValidator(1, message='Минимальное значение 1!'),
         ],
-        blank=False,
     )
 
     pub_date = models.DateTimeField(
@@ -153,7 +149,6 @@ class IngredientsInRecipe(models.Model):
         max_digits=6,
         decimal_places=2,
         verbose_name='Количество',
-        blank=False,
         validators=(
             validate_min_amount,
         )

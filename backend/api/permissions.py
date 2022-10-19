@@ -6,10 +6,7 @@ class AdminOrReadOnly(permissions.BasePermission):
     остальным только чтение.
     """
     def has_permission(self, request, view):
-        return (
-            request.method in ('GET',)
-            or request.user.is_staff
-        )
+        return request.method in ('GET',) or request.user.is_staff
 
 
 class IsAdminOrAuthorOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
