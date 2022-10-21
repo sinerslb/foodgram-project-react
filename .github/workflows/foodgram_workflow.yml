@@ -75,7 +75,6 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     needs:
-      - copy_infra
       - build_push_backend_to_DockerHub
       - build_push_frontend_to_DockerHub
     steps:
