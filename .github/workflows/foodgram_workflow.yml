@@ -104,7 +104,7 @@ jobs:
   deploy:
     runs-on: ubuntu-20.04
     needs:
-      - copy_infra_to_server
+      - copy_infra
       - build_push_backend_to_DockerHub
       - build_push_frontend_to_DockerHub
     steps:
@@ -127,8 +127,6 @@ jobs:
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
 
           sudo docker-compose stop
-          sudo docker rm foodgram_frontend_1
           sudo docker rm foodgram_backend_1
-          sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/foodgram_front
           sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/foodgram_back
           sudo docker-compose up -d
