@@ -84,9 +84,10 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
-	passphrase: ${{ secrets.PASSPHRASE }}
+	      passphrase: ${{ secrets.PASSPHRASE }}
         script: |
           cd projects/foodgram/
+          rm .env
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo DEBUG=${{ secrets.DEBUG }} >> .env
