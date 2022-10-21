@@ -165,7 +165,7 @@ class RecipesSerializer(serializers.ModelSerializer):
                 f'{value} должен быть в формате списка!'
             )
 
-    def check_value_for_validate(self, value, klass=None):
+    def check_value_for_validate(self, value, klass=None) -> None:
         """Проверяет корректность переданного значения."""
 
         if not str(value).isdecimal():
