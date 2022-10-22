@@ -1,8 +1,8 @@
 # Foodgram
 
-Приложение для обюмена рецептами блюд. Позволяет посматривать рецепты других пользователей, подписываться на пользователей, Вести список любимых рецептов и формировать список необходимых покупок, для приготовления выбранных рецептов.
+Приложение для обюмена рецептами блюд. Позволяет посматривать рецепты других пользователей, подписываться на пользователей, вести список любимых рецептов и формировать список необходимых покупок, для приготовления выбранных рецептов.
 
-![Foodgram workflow](https://github.com/sinerslb/foodgram-project-react/actions/workflows/yamdb_workflow.yml/badge.svg)
+![Foodgram workflow](https://github.com/sinerslb/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
 ### Развёртывание
 1. Создать репозиторий с проектом  
@@ -10,6 +10,7 @@
     - для работы Django:
       ```
       SECRET_KEY - секретный ключ Django
+      DEBUG - True для рехима отладки или False
       ```
     - для работы базы данных:
       ```
@@ -32,20 +33,16 @@
       SSH_KEY - закрытая часть ключа SSH
       PASSPHRASE - пароль
       ```
-    - для информирования в Telegram через telegram-бота:
-      ```
-      TELEGRAM_TO - id чата для информирования
-      TELEGRAM_TOKEN - id информирующего бота
-      ```
-3. Скопируйте файлы infra/docker-compose.yaml и infra/nginx/default.conf из вашего проекта на сервер в  
-home/<ваш_username>/docker-compose.yaml и home/<ваш_username>/nginx/default.conf соответственно.
-4. При первом развёртывании подключиться к удалённому серверу, и выполнить команды:
+
+3. Скопируйте файлы infra/docker-compose.yaml и infra/nginx.conf из вашего проекта на сервер в home/<ваш_username>/
+4. При первом развёртывании подключиться к удалённому серверу и выполнить команды:
     ```
-    sudo docker-compose exec web python manage.py migrate --noinput
-    sudo docker-compose exec web python manage.py collectstatic --no-input
-    sudo docker-compose exec web python manage.py createsuperuser
+    sudo docker-compose exec backend python manage.py migrate --noinput
+    sudo docker-compose exec backend python manage.py collectstatic --no-input
+    sudo docker-compose exec backend python manage.py createsuperuser
     ```
-5. Проект развёрнут по адресу [siteforpractikum.sytes.net](http://siteforpractikum.sytes.net) или по ip адресу [51.250.110.174](http://51.250.110.174).
+5. Проект развёрнут по адресу [siteforpractikum.sytes.net](http://siteforpractikum.sytes.net) или по ip адресу [51.250.110.174](http://51.250.110.174). Учётная запись администратора admin@foodgram.fake, пароль admin.
+
 
 ### Стек технологий
 - Python 3.7
