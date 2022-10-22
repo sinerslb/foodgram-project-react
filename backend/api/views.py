@@ -112,17 +112,16 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
         В начале выводятся ингредиенты начинающиеся на 'name', затем остальные.
         """
         name = self.request.query_params.get('name')
-        queryset = self.queryset
         if name:
-            queryset = queryset.filter(name__icontains=name)
-            queryset = queryset.annotate(
+            queryset = self.queryset.filter(name__icontains=name)
+            return queryset.annotate(
                 ingr_order=Case(
                     When(name=name, then=Value(1)),
                     default=2,
                     output_field=IntegerField(),
                 )
             ).order_by('ingr_order')
-        return queryset
+        return self.queryset
 
 
 class RecipesViewSet(viewsets.ModelViewSet):
