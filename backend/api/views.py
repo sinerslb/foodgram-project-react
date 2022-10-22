@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 
 from django.contrib.auth import get_user_model
-from django.db.models import F, Sum
+from django.db.models import F, Sum, Case, When, Value, IntegerField
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 from django.http import HttpResponse
@@ -11,7 +11,7 @@ from djoser.views import UserViewSet
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from api.filters import IngredientFilter, RecipeFilter
+from api.filters import RecipeFilter
 from api.pagination import CustomPagination
 from api.permissions import IsAdminOrAuthorOrReadOnly, AdminOrReadOnly
 from api.serializers import (CustomUserSerializer, IngredientsSerializer,
@@ -105,8 +105,24 @@ class IngredientsViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientsSerializer
     permission_classes = (AdminOrReadOnly,)
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = IngredientFilter
+
+    def get_queryset(self):
+        """
+        Фильтрация и сортировка ингредиентов по параметру запроса 'name'.
+        В начале выводятся ингредиенты начинающиеся на 'name', затем остальные.
+        """
+        name = self.request.query_params.get('name')
+        queryset = self.queryset
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+            queryset = queryset.annotate(
+                ingr_order=Case(
+                    When(name=name, then=Value(1)),
+                    default=2,
+                    output_field=IntegerField(),
+                )
+            ).order_by('ingr_order')
+        return queryset
 
 
 class RecipesViewSet(viewsets.ModelViewSet):

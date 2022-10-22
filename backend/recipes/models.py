@@ -16,12 +16,16 @@ class Tag(models.Model):
     )
 
     color = models.CharField(
-        'Цвет', help_text=('Введите код цвета в шестнадцетиричном формате '
-                           '(#ABCDEF)'),
-        max_length=7, validators=(
+        'Цвет',
+        help_text=('Введите код цвета в шестнадцетиричном формате (#ABCDEF)'),
+        max_length=7,
+        validators=(
             RegexValidator(
-                regex='^#[a-ef-F0-9]{6}$', code='wrong_hex_code',
-                message='Неправильный формат цвета'), ))
+                regex='^#[a-fA-F0-9]{6}$',
+                code='wrong_hex_code',
+                message='Неправильный формат цвета'),
+        )
+    )
 
     slug = models.SlugField(
         unique=True,
