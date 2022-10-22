@@ -88,7 +88,8 @@ jobs:
         script: |
 
           sudo docker-compose stop
-          sudo docker rm backend
+          sudo docker rm foodgram_backend_1
+          sudo docker rmi ${{ secrets.DOCKER_USER }}/foodgram_back
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo DEBUG=${{ secrets.DEBUG }} >> .env

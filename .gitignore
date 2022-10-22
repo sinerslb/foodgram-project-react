@@ -134,5 +134,5 @@ dmypy.json
 # папка с медиа
 backend/media/
 
-# настройки VSC
-.vscode/
+.vscode/*
+*.code-workspace
