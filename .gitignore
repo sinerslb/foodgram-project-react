@@ -134,5 +134,10 @@ dmypy.json
 # папка с медиа
 backend/media/
 
+### VisualStudioCode ###
+.vscode/
 .vscode/*
-*.code-workspace
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
